@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom';
 
 import { getUser, logout } from '../../services/auth';
 
+import { Header } from './styles';
+
 class MyList extends Component {
     
     handleLogOut = async e => {
@@ -14,10 +16,10 @@ class MyList extends Component {
     render() {
         return(
             <div className='container'>
-                <header>
+                <Header>
                     <p>Usuario logado: {getUser().name}</p>
                     <button onClick={this.handleLogOut}>Sair</button>
-                </header>
+                </Header>
                 
             </div>
         )

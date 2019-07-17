@@ -21,11 +21,24 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     />
 );
 
+const NormalRoute = ({ component: Component, ...rest }) => (
+    <Route
+            {...rest}
+
+            render={props => isAuthenticated() ? (
+                <Redirect to={{ pathname: '/mylist', state: { from: props.location} }} />
+            ) : (
+                <Component {...props} />
+            )
+        }
+    />
+);
+
 const Routes = () => (
     <BrowserRouter>
         <Switch>
-            <Route exact path="/" component={SignIn} />
-            <Route path="/signup" component={SignUp} />
+            <NormalRoute exact path="/" component={SignIn} />
+            <NormalRoute path="/signup" component={SignUp} />
             <PrivateRoute path="/mylist" component={MyList} />
             <Route path="*" component={() => <h1>404 not found</h1>} />
         </Switch>
