@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import api from '../../services/api';
 
 class SignUp extends Component {
     state = {
@@ -9,11 +10,30 @@ class SignUp extends Component {
         error: ''
     }
 
+    handleSignUp = async e => {
+        e.preventDefault();
+        
+        const user = this.state;
+
+        if(!user.name || !user.email || !user.password){
+            this.setState({ error: 'Dados Insuficientes.' });
+        } else {
+            try {
+                
+                await api.post('/users', user);
+                this.props.history.push('/');
+                
+            } catch (error) {
+                console.log(error);
+                this.setState({ error: 'Ocorreu um erro inesperado.' });
+            }
+        }
+    }
 
     render() {
         return (
             <div className='container'>
-                <form onSubmit={alert('fui enviado')}>
+                <form onSubmit={this.handleSignUp}>
                     {this.state.error && <p>{this.state.error}</p>}
 
                     <input
