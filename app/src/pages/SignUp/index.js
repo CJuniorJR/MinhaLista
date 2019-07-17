@@ -19,9 +19,13 @@ class SignUp extends Component {
             this.setState({ error: 'Dados Insuficientes.' });
         } else {
             try {
+                let created = await api.post('/users', user);
+                if(created.status === 201){
+                    this.props.history.push('/');
+                } else {
+                    this.setState({ error: 'Não foi possível cadastrar o usuario' });
+                }
                 
-                await api.post('/users', user);
-                this.props.history.push('/');
                 
             } catch (error) {
                 console.log(error);

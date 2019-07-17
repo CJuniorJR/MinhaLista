@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 
 import api from '../../services/api';
-import { login } from '../../services/auth';
+import { login, isAuthenticated } from '../../services/auth';
 
 class SignIn extends Component {
     state = {
@@ -22,7 +22,12 @@ class SignIn extends Component {
             try {
                 let logged = await api.post('/users/auth', { email, password });
                 login(logged.token);
-                this.props.history.push('/app');
+                if(isAuthenticated){
+                    this.props.history.push('/app');
+                } else {
+                    this.setState({ error: 'Não foi possível realizar o login' });
+                }
+                
 
             } catch (error) {
                 console.log(error);
