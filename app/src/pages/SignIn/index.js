@@ -4,6 +4,8 @@ import { withRouter, Link } from 'react-router-dom';
 import api from '../../services/api';
 import { login, isAuthenticated } from '../../services/auth';
 
+import { Container, Form } from './styles';
+
 class SignIn extends Component {
     state = {
         email: '',
@@ -21,11 +23,13 @@ class SignIn extends Component {
         } else {
             try {
                 let logged = await api.post('/users/auth', { email, password });
-                login(logged.token);
-                if(isAuthenticated){
-                    this.props.history.push('/app');
+                login(logged);
+                if(isAuthenticated && logged.status === 200){
+                    this.props.history.push('/mylist');
+                } else if(logged.status === 401) {
+                    this.setState({ error: 'E-mail e/ou senha Inválidos' });
                 } else {
-                    this.setState({ error: 'Não foi possível realizar o login' });
+                    this.setState({ error: 'Ocorreu um erro inesperado.' });
                 }
                 
 
@@ -38,8 +42,8 @@ class SignIn extends Component {
 
     render() {
         return (
-            <div className='container'>
-                <form onSubmit={this.handlerSignIn}>
+            <Container>
+                <Form onSubmit={this.handleSignIn}>
                     {this.state.error && <p>{this.state.error}</p>}
 
                     <input
@@ -58,8 +62,8 @@ class SignIn extends Component {
                     <hr />
                     <Link to='/signup'>Cadastrar-se</Link>
 
-                </form>
-            </div>
+                </Form>
+            </Container>
         )
     }
 

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import api from '../../services/api';
 
+import { Container, Form } from './styles';
+
 class SignUp extends Component {
     state = {
         name: '',
@@ -36,8 +38,8 @@ class SignUp extends Component {
 
     render() {
         return (
-            <div className='container'>
-                <form onSubmit={this.handleSignUp}>
+            <Container>
+                <Form onSubmit={this.handleSignUp}>
                     {this.state.error && <p>{this.state.error}</p>}
 
                     <input
@@ -62,8 +64,8 @@ class SignUp extends Component {
                 <hr />
                 <Link to='/'>Fazer Login</Link>
 
-                </form>
-            </div>
+                </Form>
+            </Container>
         )
     }
 }
