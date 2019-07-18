@@ -36,7 +36,6 @@ class MyList extends Component {
         } else{
             try {
                 let created = await api.post(`/users/${getUser()._id}/todo`, task);
-                console.log(created);
                 if(created.status === 201){
                     this.loadTasks();
                     this.setState({ task: '' });
