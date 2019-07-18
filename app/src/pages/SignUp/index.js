@@ -45,18 +45,21 @@ class SignUp extends Component {
                     <input
                         type='text'
                         placeholder='Nome'
+                        value={this.state.name}
                         onChange={e => this.setState({ name: e.target.value })}
                     />
 
                     <input 
                         type='email'
                         placeholder='E-mail'
+                        value={this.state.email}
                         onChange={e => this.setState({ email: e.target.value })}
                     />
 
                     <input
                         type='password'
                         placeholder='Senha'
+                        value={this.state.password}
                         onChange={e => this.setState({ password: e.target.value })}
                     />
 
